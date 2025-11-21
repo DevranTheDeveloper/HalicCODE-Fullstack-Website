@@ -1,26 +1,329 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: #0f172a;
+  --color-foreground: #f8fafc;
+  --color-primary: #0f172a;
+  --color-primary-light: #1e293b;
+  --color-primary-dark: #020617;
+  --color-accent: #0ea5e9;
+  --color-accent-hover: #0284c7;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+
+  /* --- Layout & Common --- */
+  .container-main {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16;
+  }
+
+  /* --- Buttons --- */
+  .btn-primary {
+    @apply px-8 py-3 bg-accent hover:bg-accent-hover text-white rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg shadow-accent/25;
+  }
+
+  .btn-secondary {
+    @apply px-8 py-3 bg-primary-light hover:bg-gray-800 text-white border border-gray-700 rounded-full font-semibold transition-all;
+  }
+
+  /* --- Hero Section --- */
+  .hero-section {
+    @apply sticky top-0 h-screen flex items-center justify-center overflow-hidden z-0;
+  }
+
+  .hero-bg-gradient {
+    @apply absolute inset-0 bg-gradient-to-b from-primary-dark/80 via-primary/90 to-background z-10;
+  }
+
+  .hero-logo-bg {
+    @apply absolute inset-0 flex items-center justify-center z-10 opacity-4 pointer-events-none;
+  }
+
+  .hero-logo-img-container {
+    @apply relative w-[800px] h-[800px] md:w-[1000px] md:h-[1000px];
+  }
+
+  .hero-content {
+    @apply relative z-20 text-center px-4 max-w-5xl mx-auto flex flex-col items-center justify-center h-full;
+  }
+
+  .hero-title {
+    @apply text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-accent drop-shadow-lg;
+  }
+
+  .hero-subtitle {
+    @apply text-xl md:text-2xl text-gray-300 mb-10 font-light tracking-wide drop-shadow-md;
+  }
+
+  .hero-actions {
+    @apply flex flex-col sm:flex-row gap-4 justify-center;
+  }
+
+  /* --- Events Section --- */
+  .events-wrapper {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-16;
+  }
+
+  .section-header {
+    @apply flex items-center gap-4 mb-8;
+  }
+
+  .section-indicator {
+    @apply h-8 w-1 rounded-full;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold text-white;
+  }
+
+  .events-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .empty-state {
+    @apply text-center py-12 bg-primary-light/30 rounded-2xl border border-dashed border-gray-700;
+  }
+
+  /* --- Event Card --- */
+  .event-card {
+    @apply bg-primary-light border border-gray-800 rounded-2xl overflow-hidden hover:border-accent/50 transition-all hover:shadow-xl hover:shadow-accent/10 flex flex-col h-full;
+  }
+
+  .event-image-wrapper {
+    @apply relative h-48 w-full bg-gray-800;
+  }
+
+  .event-image {
+    @apply object-cover transition-transform duration-500;
+  }
+
+  .event-card:hover .event-image {
+    transform: scale(1.05);
+  }
+
+  .event-placeholder {
+    @apply w-full h-full flex items-center justify-center;
+  }
+
+  .event-date-badge {
+    @apply absolute top-4 right-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium border border-white/10;
+  }
+
+  .event-content {
+    @apply p-6 flex flex-col flex-grow;
+  }
+
+  .event-title {
+    @apply text-xl font-bold text-white mb-2 transition-colors;
+  }
+
+  .event-card:hover .event-title {
+    @apply text-accent;
+  }
+
+  .event-description {
+    @apply text-gray-400 text-sm mb-4 line-clamp-2 flex-grow;
+  }
+
+  .event-footer {
+    @apply flex items-center text-sm text-gray-500 mt-auto pt-4 border-t border-gray-800;
+  }
+
+  /* --- Members Page --- */
+  .members-page-wrapper {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16;
+  }
+
+  .page-header {
+    @apply text-center mb-16;
+  }
+
+  .page-title {
+    @apply text-4xl md:text-5xl font-bold text-white mb-4;
+  }
+
+  .page-subtitle {
+    @apply text-xl text-gray-400 max-w-2xl mx-auto;
+  }
+
+  .role-section {
+    @apply flex flex-col items-center;
+  }
+
+  .role-title {
+    @apply text-3xl font-bold text-accent mb-8 border-b-2 border-accent/30 pb-2 inline-block;
+  }
+
+  .role-title-secondary {
+    @apply text-2xl font-bold text-white mb-8 border-b border-gray-700 pb-2 inline-block;
+  }
+
+  .members-grid-heads {
+    @apply flex flex-wrap justify-center gap-8;
+  }
+
+  .members-grid-regular {
+    @apply flex flex-wrap justify-center gap-6;
+  }
+
+  /* --- Member Card --- */
+  .member-card {
+    @apply relative bg-primary-light border border-gray-800 rounded-xl overflow-hidden hover:border-accent/50 transition-all hover:shadow-lg hover:shadow-accent/10 flex flex-col h-full w-64;
+  }
+
+  .member-image-wrapper {
+    @apply aspect-square relative bg-gray-800 overflow-hidden;
+  }
+
+  .member-image {
+    @apply object-cover transition-transform duration-500;
+  }
+
+  .member-card:hover .member-image {
+    transform: scale(1.1);
+  }
+
+  .member-placeholder {
+    @apply w-full h-full flex items-center justify-center bg-gradient-to-b from-gray-800 to-primary-dark transition-colors;
+  }
+
+  .member-card:hover .member-placeholder {
+    @apply from-gray-700 to-primary;
+  }
+
+  .member-placeholder-icon {
+    @apply w-20 h-20 text-gray-600 transition-colors;
+  }
+
+  .member-card:hover .member-placeholder-icon {
+    @apply text-accent/50;
+  }
+
+  .member-overlay {
+    @apply absolute inset-0 bg-black/60 opacity-0 transition-opacity flex items-center justify-center gap-3 backdrop-blur-[2px];
+  }
+
+  .member-card:hover .member-overlay {
+    opacity: 1;
+  }
+
+  .member-info {
+    @apply p-4;
+  }
+
+  .member-name {
+    @apply text-white font-semibold truncate;
+  }
+
+  .member-role {
+    @apply text-accent text-sm mb-1;
+  }
+
+  /* --- Navbar --- */
+  .navbar {
+    @apply bg-primary/80 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50;
+  }
+
+  .navbar-container {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .navbar-content {
+    @apply flex items-center justify-between h-16;
+  }
+
+  .nav-link {
+    @apply text-gray-300 hover:text-accent hover:bg-primary-light px-3 py-2 rounded-md text-sm font-medium transition-colors;
+  }
+
+  /* --- Footer --- */
+  .footer {
+    @apply bg-primary-dark border-t border-gray-800 py-12;
+  }
+
+  .footer-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .footer-grid {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-8;
+  }
+
+  .footer-title {
+    @apply text-xl font-bold text-white mb-4;
+  }
+
+  .footer-text {
+    @apply text-gray-400;
+  }
+
+  .footer-link {
+    @apply text-gray-400 hover:text-accent transition-colors;
+  }
+
+  /* --- Animations & Visuals --- */
+  @keyframes blob {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+
+  .bg-grid-pattern {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  }
+
+  .blob-shape {
+    @apply absolute rounded-full mix-blend-screen filter blur-3xl opacity-30;
+  }
 }
