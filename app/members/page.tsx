@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import Image from 'next/image';
+import Starfield from '../../components/Starfield';
 
 const prisma = new PrismaClient();
 
@@ -24,8 +25,11 @@ export default async function MembersPage() {
         <div className="relative min-h-screen overflow-hidden">
             {/* Background Elements */}
             <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/90 via-primary/95 to-background z-10" />
-                <div className="absolute inset-0 bg-grid-pattern z-10 opacity-30" />
+                <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/90 via-primary/95 to-background z-0" />
+                <div className="absolute inset-0 bg-grid-pattern z-0 opacity-30" />
+
+                {/* Starfield */}
+                <Starfield />
 
                 {/* Ambient Blobs */}
                 <div className="absolute top-20 -left-4 w-96 h-96 bg-purple-500 blob-shape animate-blob z-10"></div>
@@ -36,10 +40,10 @@ export default async function MembersPage() {
             <div className="members-page-wrapper relative z-10">
                 <div className="page-header">
                     <h1 className="page-title">
-                        Our Community
+                        Topluluğumuz
                     </h1>
                     <p className="page-subtitle">
-                        Meet the dedicated individuals who make Haliç CODE possible.
+                        Haliç CODE'u mümkün kılan özverili bireylerle tanışın.
                     </p>
                 </div>
 
@@ -48,7 +52,7 @@ export default async function MembersPage() {
                     {heads.length > 0 && (
                         <section className="role-section">
                             <h2 className="role-title">
-                                Head Of Community
+                                Topluluk Liderleri
                             </h2>
                             <div className="members-grid-heads">
                                 {heads.map((member) => (
@@ -62,7 +66,7 @@ export default async function MembersPage() {
                     {socialMedia.length > 0 && (
                         <section className="role-section">
                             <h2 className="role-title-secondary">
-                                Social Media Team
+                                Sosyal Medya Ekibi
                             </h2>
                             <div className="members-grid-regular">
                                 {socialMedia.map((member) => (
@@ -76,7 +80,7 @@ export default async function MembersPage() {
                     {sponsorFinders.length > 0 && (
                         <section className="role-section">
                             <h2 className="role-title-secondary">
-                                Sponsor Team
+                                Sponsor Ekibi
                             </h2>
                             <div className="members-grid-regular">
                                 {sponsorFinders.map((member) => (
@@ -90,7 +94,7 @@ export default async function MembersPage() {
                     {regularMembers.length > 0 && (
                         <section className="role-section">
                             <h2 className="role-title-secondary">
-                                Members
+                                Üyeler
                             </h2>
                             <div className="members-grid-regular">
                                 {regularMembers.map((member) => (
@@ -135,7 +139,7 @@ function MemberCard({ member }: { member: any }) {
             </div>
 
             {/* Full Card Overlay on Hover */}
-            <div className="absolute inset-0 bg-primary-dark/95 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm z-20">
+            <div className="member-overlay flex-col text-center p-6 z-20">
                 <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
                 <p className="text-accent text-sm mb-4">{member.role}</p>
 

@@ -27,6 +27,12 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .animate-twinkle {
+    animation: twinkle 3s ease-in-out infinite;
   }
 }
 
@@ -249,7 +255,7 @@
   }
 
   .navbar-container {
-    @apply max-w-7xl mx-auto;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   .navbar-content {
@@ -325,5 +331,146 @@
 
   .blob-shape {
     @apply absolute rounded-full mix-blend-screen filter blur-3xl opacity-30;
+  }
+
+  @keyframes overlayShow {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes overlayHide {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    to {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-overlay-in {
+    animation: overlayShow 0.2s ease-out forwards;
+  }
+
+  .animate-overlay-out {
+    animation: overlayHide 0.2s ease-out forwards;
+  }
+
+  .animate-slideDown {
+    animation: slideDown 0.2s ease-out forwards;
+  }
+
+  .animate-rotate {
+    animation: rotate 0.2s ease-out forwards;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(180deg);
+    }
+  }
+
+  @keyframes twinkle {
+
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .starfield {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .starfield::before,
+  .starfield::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow:
+      100px 200px 0 0 rgba(255, 255, 255, 0.5),
+      200px 100px 0 0 rgba(255, 255, 255, 0.3),
+      300px 300px 0 0 rgba(255, 255, 255, 0.4),
+      400px 150px 0 0 rgba(255, 255, 255, 0.6),
+      500px 350px 0 0 rgba(255, 255, 255, 0.3),
+      150px 400px 0 0 rgba(255, 255, 255, 0.5),
+      250px 500px 0 0 rgba(255, 255, 255, 0.4),
+      350px 50px 0 0 rgba(255, 255, 255, 0.3),
+      450px 250px 0 0 rgba(255, 255, 255, 0.5),
+      550px 450px 0 0 rgba(255, 255, 255, 0.4),
+      50px 550px 0 0 rgba(255, 255, 255, 0.6),
+      650px 150px 0 0 rgba(255, 255, 255, 0.3),
+      750px 350px 0 0 rgba(255, 255, 255, 0.5),
+      850px 250px 0 0 rgba(255, 255, 255, 0.4),
+      950px 450px 0 0 rgba(255, 255, 255, 0.3),
+      600px 600px 0 0 rgba(255, 255, 255, 0.5),
+      700px 200px 0 0 rgba(255, 255, 255, 0.4),
+      800px 500px 0 0 rgba(255, 255, 255, 0.6),
+      900px 100px 0 0 rgba(255, 255, 255, 0.3),
+      1000px 400px 0 0 rgba(255, 255, 255, 0.5),
+      1100px 300px 0 0 rgba(255, 255, 255, 0.4),
+      120px 80px 0 0 rgba(255, 255, 255, 0.3),
+      220px 180px 0 0 rgba(255, 255, 255, 0.5),
+      320px 280px 0 0 rgba(255, 255, 255, 0.4),
+      420px 380px 0 0 rgba(255, 255, 255, 0.6);
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  .starfield::after {
+    animation-delay: 1.5s;
+    box-shadow:
+      180px 120px 0 0 rgba(255, 255, 255, 0.4),
+      280px 220px 0 0 rgba(255, 255, 255, 0.5),
+      380px 320px 0 0 rgba(255, 255, 255, 0.3),
+      480px 420px 0 0 rgba(255, 255, 255, 0.6),
+      580px 520px 0 0 rgba(255, 255, 255, 0.4),
+      680px 220px 0 0 rgba(255, 255, 255, 0.5),
+      780px 420px 0 0 rgba(255, 255, 255, 0.3),
+      880px 120px 0 0 rgba(255, 255, 255, 0.4),
+      980px 320px 0 0 rgba(255, 255, 255, 0.5),
+      1080px 220px 0 0 rgba(255, 255, 255, 0.6),
+      140px 340px 0 0 rgba(255, 255, 255, 0.3),
+      240px 440px 0 0 rgba(255, 255, 255, 0.5),
+      340px 140px 0 0 rgba(255, 255, 255, 0.4),
+      440px 240px 0 0 rgba(255, 255, 255, 0.3),
+      540px 340px 0 0 rgba(255, 255, 255, 0.6),
+      640px 440px 0 0 rgba(255, 255, 255, 0.5),
+      740px 140px 0 0 rgba(255, 255, 255, 0.4),
+      840px 240px 0 0 rgba(255, 255, 255, 0.3),
+      940px 540px 0 0 rgba(255, 255, 255, 0.5),
+      1040px 340px 0 0 rgba(255, 255, 255, 0.4);
   }
 }
