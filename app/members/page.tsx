@@ -8,18 +8,28 @@ export const revalidate = 0; // Disable caching for this page to see admin updat
 
 async function getMembers() {
     return await prisma.member.findMany({
+        include: {
+            role: true,
+        },
         orderBy: { id: 'asc' },
+    });
+}
+
+async function getRoles() {
+    return await prisma.role.findMany({
+        orderBy: { order: 'asc' },
     });
 }
 
 export default async function MembersPage() {
     const members = await getMembers();
+    const roles = await getRoles();
 
     // Group members by role
-    const heads = members.filter(m => m.role === 'Head');
-    const socialMedia = members.filter(m => m.role === 'Social Media');
-    const sponsorFinders = members.filter(m => m.role === 'Sponsor Finder');
-    const regularMembers = members.filter(m => m.role === 'Member');
+    const membersByRole = roles.map(role => ({
+        role,
+        members: members.filter(m => m.roleId === role.id)
+    })).filter(group => group.members.length > 0);
 
     return (
         <div className="relative min-h-screen overflow-hidden">
@@ -48,61 +58,19 @@ export default async function MembersPage() {
                 </div>
 
                 <div className="space-y-20">
-                    {/* Heads Section */}
-                    {heads.length > 0 && (
-                        <section className="role-section">
-                            <h2 className="role-title">
-                                Topluluk Liderleri
+                    {/* Dynamic Role Sections */}
+                    {membersByRole.map(({ role, members }) => (
+                        <section key={role.id} className="role-section">
+                            <h2 className={role.order === 1 ? "role-title" : "role-title-secondary"}>
+                                {role.nameTr}
                             </h2>
-                            <div className="members-grid-heads">
-                                {heads.map((member) => (
+                            <div className={role.order === 1 ? "members-grid-heads" : "members-grid-regular"}>
+                                {members.map((member) => (
                                     <MemberCard key={member.id} member={member} />
                                 ))}
                             </div>
                         </section>
-                    )}
-
-                    {/* Social Media Team */}
-                    {socialMedia.length > 0 && (
-                        <section className="role-section">
-                            <h2 className="role-title-secondary">
-                                Sosyal Medya Ekibi
-                            </h2>
-                            <div className="members-grid-regular">
-                                {socialMedia.map((member) => (
-                                    <MemberCard key={member.id} member={member} />
-                                ))}
-                            </div>
-                        </section>
-                    )}
-
-                    {/* Sponsor Finders */}
-                    {sponsorFinders.length > 0 && (
-                        <section className="role-section">
-                            <h2 className="role-title-secondary">
-                                Sponsor Ekibi
-                            </h2>
-                            <div className="members-grid-regular">
-                                {sponsorFinders.map((member) => (
-                                    <MemberCard key={member.id} member={member} />
-                                ))}
-                            </div>
-                        </section>
-                    )}
-
-                    {/* Members */}
-                    {regularMembers.length > 0 && (
-                        <section className="role-section">
-                            <h2 className="role-title-secondary">
-                                Üyeler
-                            </h2>
-                            <div className="members-grid-regular">
-                                {regularMembers.map((member) => (
-                                    <MemberCard key={member.id} member={member} />
-                                ))}
-                            </div>
-                        </section>
-                    )}
+                    ))}
                 </div>
             </div>
         </div>
@@ -135,13 +103,13 @@ function MemberCard({ member }: { member: any }) {
 
             <div className="member-info">
                 <h3 className="member-name">{member.name}</h3>
-                <p className="member-role">{member.role}</p>
+                <p className="member-role">{member.role.nameTr}</p>
             </div>
 
             {/* Full Card Overlay on Hover */}
             <div className="member-overlay flex-col text-center p-6 z-20">
                 <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
-                <p className="text-accent text-sm mb-4">{member.role}</p>
+                <p className="text-accent text-sm mb-4">{member.role.nameTr}</p>
 
                 {member.bio && (
                     <p className="text-gray-300 text-sm mb-4 line-clamp-4">

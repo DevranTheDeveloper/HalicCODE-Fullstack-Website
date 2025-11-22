@@ -50,8 +50,6 @@ export default function EventsGrid({ activeEvents, futureEvents }: { activeEvent
                         className={`bg-primary-dark border border-accent/50 rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl shadow-accent/20 relative flex flex-col md:flex-row max-h-[85vh] md:max-h-[90vh] ${isClosing ? 'animate-overlay-out' : 'animate-overlay-in'
                             }`}
                         onClick={(e) => e.stopPropagation()}
-                        onMouseEnter={() => setHoveredEvent(hoveredEvent)}
-                        onMouseLeave={handleClose}
                     >
                         {/* Full Sized Image Section */}
                         <div className="relative h-48 md:h-auto md:w-1/2 bg-gray-900 flex-shrink-0">
@@ -172,11 +170,6 @@ function EventCard({ event, type, onHover }: { event: Event, type: 'active' | 'f
     return (
         <div
             className="event-card group cursor-pointer"
-            onMouseEnter={() => {
-                if (window.innerWidth >= 768) {
-                    onHover();
-                }
-            }}
             onClick={onHover}
         >
             <div className="event-image-wrapper">

@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const prisma = new PrismaClient();
 
@@ -27,7 +28,11 @@ export default async function NewsSection() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {news.map((item) => (
-                    <div key={item.id} className="bg-primary-light border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all hover:shadow-xl hover:shadow-blue-500/10 flex flex-col h-full group">
+                    <Link
+                        key={item.id}
+                        href={`/news/${item.id}`}
+                        className="bg-primary-light border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all hover:shadow-xl hover:shadow-blue-500/10 flex flex-col h-full group cursor-pointer"
+                    >
                         <div className="relative h-48 w-full bg-gray-800 overflow-hidden">
                             {item.imageUrl ? (
                                 <Image
@@ -52,8 +57,14 @@ export default async function NewsSection() {
                             <p className="text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
                                 {item.content}
                             </p>
+                            <div className="flex items-center gap-2 text-blue-400 text-sm font-medium group-hover:gap-3 transition-all">
+                                <span>Devamını Oku</span>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </section>

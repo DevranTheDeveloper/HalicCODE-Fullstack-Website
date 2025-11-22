@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-    // Check if the path starts with /admin
-    if (request.nextUrl.pathname.startsWith('/admin')) {
+    // Check if the path starts with /console-2024
+    if (request.nextUrl.pathname.startsWith('/console-2024')) {
         const token = request.cookies.get('admin_token');
 
         if (!token) {
@@ -15,5 +15,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/admin', '/admin/:path*'],
+    matcher: ['/console-2024', '/console-2024/:path*'],
 };

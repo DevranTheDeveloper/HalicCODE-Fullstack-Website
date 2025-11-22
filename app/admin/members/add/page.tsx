@@ -71,30 +71,6 @@ export default function AddMemberPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-                            Email (Optional)
-                        </label>
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            className="w-full bg-primary-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                            placeholder="john@example.com"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="instagram" className="block text-sm font-medium text-gray-300 mb-1">
-                            Instagram URL (Optional)
-                        </label>
-                        <input
-                            type="url"
-                            name="instagram"
-                            id="instagram"
-                            className="w-full bg-primary-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                            placeholder="https://instagram.com/..."
-                        />
-                    </div>
-                    <div>
                         <label htmlFor="linkedin" className="block text-sm font-medium text-gray-300 mb-1">
                             LinkedIn URL (Optional)
                         </label>

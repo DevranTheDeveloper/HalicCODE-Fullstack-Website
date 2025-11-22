@@ -12,10 +12,34 @@ async function getEvents() {
   const activeEvents = await prisma.event.findMany({
     where: { status: 'Active' },
     orderBy: { date: 'asc' },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      date: true,
+      location: true,
+      imageUrl: true,
+      status: true,
+      registrationLink: true,
+      createdAt: true,
+      updatedAt: true
+    }
   });
   const futureEvents = await prisma.event.findMany({
     where: { status: 'Future' },
     orderBy: { date: 'asc' },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      date: true,
+      location: true,
+      imageUrl: true,
+      status: true,
+      registrationLink: true,
+      createdAt: true,
+      updatedAt: true
+    }
   });
   return { activeEvents, futureEvents };
 }
@@ -95,14 +119,14 @@ export default async function Home() {
                 <span className="text-2xl">💡</span>
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Birlikte Öğrenin</h3>
-              <p className="text-gray-400">Yeni teknolojilerde uzmanlaşmak için atölyelere, hackathonlara ve çalışma gruplarına katılın.</p>
+              <p className="text-gray-400">Yeni teknolojilerde uzmanlaşmak için topluluğumuzun sağladığı eğitimlere katılın!</p>
             </div>
             <div className="bg-primary-light/50 backdrop-blur-sm border border-gray-800 p-8 rounded-2xl hover:border-blue-500/50 transition-colors group">
               <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
                 <span className="text-2xl">🤝</span>
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Ağ Kurun</h3>
-              <p className="text-gray-400">Kariyerinizi büyütmek için sektör profesyonelleri ve benzer düşünen akranlarınızla bağlantı kurun.</p>
+              <p className="text-gray-400">Kariyerinizi büyütmek için sektör profesyonelleri ve benzer düşünen akranlarınızla ve alanında deneyimli profesyonellerle bağlantı kurun.</p>
             </div>
           </div>
         </section>

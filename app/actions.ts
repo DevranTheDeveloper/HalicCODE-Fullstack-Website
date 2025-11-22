@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 
 export async function createMember(formData: FormData) {
     const name = formData.get('name') as string;
-    const role = formData.get('role') as string;
+    const roleId = parseInt(formData.get('roleId') as string);
     const bio = formData.get('bio') as string;
     const imageUrl = transformGoogleDriveUrl(formData.get('imageUrl') as string);
     const linkedin = formData.get('linkedin') as string;
@@ -22,7 +22,7 @@ export async function createMember(formData: FormData) {
     await prisma.member.create({
         data: {
             name,
-            role,
+            roleId,
             bio,
             imageUrl: imageUrl || null,
             linkedin: linkedin || null,
@@ -33,8 +33,8 @@ export async function createMember(formData: FormData) {
     });
 
     revalidatePath('/members');
-    revalidatePath('/admin');
-    redirect('/admin');
+    revalidatePath('/console-2024');
+    redirect('/console-2024');
 }
 
 export async function deleteMember(id: number) {
@@ -43,12 +43,12 @@ export async function deleteMember(id: number) {
     });
 
     revalidatePath('/members');
-    revalidatePath('/admin');
+    revalidatePath('/console-2024');
 }
 
 export async function updateMember(id: number, formData: FormData) {
     const name = formData.get('name') as string;
-    const role = formData.get('role') as string;
+    const roleId = parseInt(formData.get('roleId') as string);
     const bio = formData.get('bio') as string;
     const imageUrl = transformGoogleDriveUrl(formData.get('imageUrl') as string);
     const linkedin = formData.get('linkedin') as string;
@@ -60,7 +60,7 @@ export async function updateMember(id: number, formData: FormData) {
         where: { id },
         data: {
             name,
-            role,
+            roleId,
             bio,
             imageUrl: imageUrl || null,
             linkedin: linkedin || null,
@@ -71,8 +71,8 @@ export async function updateMember(id: number, formData: FormData) {
     });
 
     revalidatePath('/members');
-    revalidatePath('/admin');
-    redirect('/admin');
+    revalidatePath('/console-2024');
+    redirect('/console-2024');
 }
 
 // --- Events ---
@@ -99,8 +99,8 @@ export async function createEvent(formData: FormData) {
     });
 
     revalidatePath('/');
-    revalidatePath('/admin');
-    redirect('/admin');
+    revalidatePath('/console-2024');
+    redirect('/console-2024');
 }
 
 export async function updateEvent(id: number, formData: FormData) {
@@ -126,8 +126,8 @@ export async function updateEvent(id: number, formData: FormData) {
     });
 
     revalidatePath('/');
-    revalidatePath('/admin');
-    redirect('/admin');
+    revalidatePath('/console-2024');
+    redirect('/console-2024');
 }
 
 export async function deleteEvent(id: number) {
@@ -136,7 +136,7 @@ export async function deleteEvent(id: number) {
     });
 
     revalidatePath('/');
-    revalidatePath('/admin');
+    revalidatePath('/console-2024');
 }
 
 // --- News ---
@@ -146,6 +146,7 @@ export async function createNews(formData: FormData) {
     const content = formData.get('content') as string;
     const imageUrl = transformGoogleDriveUrl(formData.get('imageUrl') as string);
     const date = new Date(formData.get('date') as string);
+    const photos = formData.get('photos') as string || '[]';
 
     await prisma.news.create({
         data: {
@@ -153,12 +154,13 @@ export async function createNews(formData: FormData) {
             content,
             imageUrl: imageUrl || null,
             date: date || new Date(),
+            photos,
         },
     });
 
     revalidatePath('/');
-    revalidatePath('/admin');
-    redirect('/admin');
+    revalidatePath('/console-2024');
+    redirect('/console-2024');
 }
 
 export async function updateNews(id: number, formData: FormData) {
@@ -166,6 +168,7 @@ export async function updateNews(id: number, formData: FormData) {
     const content = formData.get('content') as string;
     const imageUrl = transformGoogleDriveUrl(formData.get('imageUrl') as string);
     const date = new Date(formData.get('date') as string);
+    const photos = formData.get('photos') as string || '[]';
 
     await prisma.news.update({
         where: { id },
@@ -174,12 +177,13 @@ export async function updateNews(id: number, formData: FormData) {
             content,
             imageUrl: imageUrl || null,
             date: date || new Date(),
+            photos,
         },
     });
 
     revalidatePath('/');
-    revalidatePath('/admin');
-    redirect('/admin');
+    revalidatePath('/console-2024');
+    redirect('/console-2024');
 }
 
 export async function deleteNews(id: number) {
@@ -188,5 +192,62 @@ export async function deleteNews(id: number) {
     });
 
     revalidatePath('/');
-    revalidatePath('/admin');
+    revalidatePath('/console-2024');
+}
+
+// --- Roles ---
+
+export async function createRole(formData: FormData) {
+    const name = formData.get('name') as string;
+    const nameTr = formData.get('nameTr') as string;
+    const order = parseInt(formData.get('order') as string) || 0;
+
+    await prisma.role.create({
+        data: {
+            name,
+            nameTr,
+            order,
+        },
+    });
+
+    revalidatePath('/console-2024');
+    revalidatePath('/members');
+    redirect('/console-2024/roles');
+}
+
+export async function updateRole(id: number, formData: FormData) {
+    const name = formData.get('name') as string;
+    const nameTr = formData.get('nameTr') as string;
+    const order = parseInt(formData.get('order') as string) || 0;
+
+    await prisma.role.update({
+        where: { id },
+        data: {
+            name,
+            nameTr,
+            order,
+        },
+    });
+
+    revalidatePath('/console-2024');
+    revalidatePath('/members');
+    redirect('/console-2024/roles');
+}
+
+export async function deleteRole(id: number) {
+    // Check if any members have this role
+    const count = await prisma.member.count({
+        where: { roleId: id },
+    });
+
+    if (count > 0) {
+        throw new Error(`Bu rol ${count} üyeye atanmış. Önce üyeleri başka bir role taşıyın.`);
+    }
+
+    await prisma.role.delete({
+        where: { id },
+    });
+
+    revalidatePath('/console-2024');
+    revalidatePath('/members');
 }

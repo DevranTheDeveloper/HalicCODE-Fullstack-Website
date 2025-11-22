@@ -18,22 +18,22 @@ export default function LoginPage() {
         });
 
         if (res.ok) {
-            router.push('/admin');
+            router.push('/console-2024');
             router.refresh();
         } else {
-            setError('Invalid password');
+            setError('Geçersiz şifre');
         }
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4">
             <div className="max-w-md w-full bg-primary-light p-8 rounded-xl border border-gray-800 shadow-2xl">
-                <h1 className="text-2xl font-bold text-white mb-6 text-center">Admin Access</h1>
+                <h1 className="text-2xl font-bold text-white mb-6 text-center">Yönetici Girişi</h1>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
-                            Password
+                            Şifre
                         </label>
                         <input
                             type="password"
@@ -41,7 +41,7 @@ export default function LoginPage() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-full bg-primary-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                            placeholder="Enter admin password"
+                            placeholder="Yönetici şifresini girin"
                         />
                     </div>
 
@@ -53,7 +53,7 @@ export default function LoginPage() {
                         type="submit"
                         className="w-full bg-accent hover:bg-accent-hover text-white font-bold py-3 px-4 rounded-lg transition-colors"
                     >
-                        Login
+                        Giriş Yap
                     </button>
                 </form>
             </div>
