@@ -1,111 +1,81 @@
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client');
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
-    console.log('Veritabanı dolduruluyor...')
+    console.log('Veritabanı dolduruluyor...');
 
     // Önce mevcut verileri temizle
-    await prisma.news.deleteMany({})
-    await prisma.event.deleteMany({})
-    await prisma.member.deleteMany({})
-    console.log('✅ Eski veriler temizlendi')
+    await prisma.news.deleteMany();
+    await prisma.event.deleteMany();
+    await prisma.member.deleteMany();
+    await prisma.role.deleteMany();
+    console.log('✅ Eski veriler temizlendi');
 
-    // Üyeler
+    // Rolleri oluştur
+    const roles = [
+        { name: 'President', nameTr: 'Başkan', order: 1 },
+        { name: 'Vice Leader', nameTr: 'Başkan Yardımcısı', order: 2 },
+        { name: 'Management Team', nameTr: 'Yönetim Kurulu', order: 3 },
+        { name: 'Social Media', nameTr: 'Sosyal Medya', order: 4 },
+        { name: 'Developer', nameTr: 'Geliştirici', order: 4 },
+        { name: 'Sponsor Finder', nameTr: 'Sponsor Sorumlusu', order: 5 },
+        { name: 'Member', nameTr: 'Üye', order: 6 },
+    ];
+
+    const createdRoles = {};
+    for (const role of roles) {
+        const createdRole = await prisma.role.create({ data: role });
+        createdRoles[role.name] = createdRole.id;
+    }
+    console.log('✅ Roller oluşturuldu');
+
+    // Üyeleri oluştur
     const members = [
         {
-            name: 'Ahmet Yılmaz',
-            role: 'Head',
-            bio: 'Haliç CODE topluluğunun kurucusu ve lideri. Full-stack geliştirme ve topluluk yönetimi konusunda deneyimli.',
-            linkedin: 'https://linkedin.com/in/ahmetyilmaz',
-            email: 'ahmet@haliccode.com'
+            name: "Ahmet Yılmaz",
+            roleId: createdRoles['President'],
+            bio: "Haliç CODE topluluğunun kurucusu ve başkanı. Full-stack geliştirme ve topluluk yönetimi konusunda deneyimli.",
+            linkedin: "https://linkedin.com/in/ahmetyilmaz",
+            email: "ahmet@haliccode.com"
         },
         {
-            name: 'Ayşe Demir',
-            role: 'Head',
-            bio: 'Front-end uzmanı ve UI/UX tasarımcısı. Modern web teknolojileri konusunda tutkulu.',
-            linkedin: 'https://linkedin.com/in/aysedemir',
-            email: 'ayse@haliccode.com'
+            name: "Ayşe Demir",
+            roleId: createdRoles['Vice Leader'],
+            bio: "Topluluk organizasyonlarından sorumlu başkan yardımcısı. Etkinlik planlama uzmanı.",
+            twitter: "https://twitter.com/aysedemir",
+            email: "ayse@haliccode.com"
         },
         {
-            name: 'Mehmet Kaya',
-            role: 'Social Media',
-            bio: 'Sosyal medya yöneticisi ve içerik üreticisi. Topluluk etkinliklerini tanıtmaktan sorumlu.',
-            instagram: 'https://instagram.com/mehmetkaya',
-            twitter: 'https://twitter.com/mehmetkaya'
+            name: "Mehmet Kaya",
+            roleId: createdRoles['Developer'],
+            bio: "Yazılım ekibi lideri. React, Node.js ve Python konularında uzman.",
+            linkedin: "https://linkedin.com/in/mehmetkaya",
+            instagram: "https://instagram.com/mehmetkaya"
         },
         {
-            name: 'Zeynep Arslan',
-            role: 'Social Media',
-            bio: 'Grafik tasarımcı ve sosyal medya içerik yaratıcısı.',
-            instagram: 'https://instagram.com/zeyneparslan'
+            name: "Zeynep Çelik",
+            roleId: createdRoles['Social Media'],
+            bio: "Sosyal medya hesaplarımızın yönetimi ve içerik üretimi.",
+            instagram: "https://instagram.com/zeynepcelik"
         },
         {
-            name: 'Can Özdemir',
-            role: 'Sponsor Finder',
-            bio: 'İş geliştirme uzmanı. Topluluk için sponsor ve işbirlikleri arıyor.',
-            linkedin: 'https://linkedin.com/in/canozdemir',
-            email: 'can@haliccode.com'
-        },
-        {
-            name: 'Elif Yıldız',
-            role: 'Sponsor Finder',
-            bio: 'Kurumsal ilişkiler sorumlusu ve etkinlik organizatörü.',
-            linkedin: 'https://linkedin.com/in/elifyildiz'
-        },
-        {
-            name: 'Burak Şahin',
-            role: 'Member',
-            bio: 'Back-end geliştirici. Node.js ve Python konusunda uzman.'
-        },
-        {
-            name: 'Selin Aydın',
-            role: 'Member',
-            bio: 'Mobil uygulama geliştiricisi. React Native ile çalışıyor.'
-        },
-        {
-            name: 'Emre Çelik',
-            role: 'Member',
-            bio: 'DevOps Engineer. Cloud altyapı ve CI/CD konusunda deneyimli.'
-        },
-        {
-            name: 'Deniz Koç',
-            role: 'Member',
-            bio: 'Data Scientist. Makine öğrenmesi ve veri analizi ile ilgileniyor.'
+            name: "Can Yıldız",
+            roleId: createdRoles['Member'],
+            bio: "Yeni teknolojiler öğrenmeye hevesli bilgisayar mühendisliği öğrencisi.",
+            email: "can@haliccode.com"
         }
-    ]
+    ];
 
     for (const member of members) {
-        await prisma.member.create({ data: member })
+        await prisma.member.create({
+            data: member
+        });
     }
-    console.log(`✅ ${members.length} üye eklendi`)
+    console.log('✅ Üyeler eklendi');
 
-    // Etkinlikler
+    // Etkinlikleri oluştur
     const events = [
-        {
-            title: 'Haliç CODE Hackathon 2024',
-            description: 'Topluluğumuzun en büyük etkinliği! 48 saat boyunca kod yazacak, proje geliştirecek ve ödüller kazanacaksınız.',
-            date: new Date('2024-12-15'),
-            status: 'Future',
-            location: 'Haliç Üniversitesi Kampüsü',
-            registrationLink: 'https://forms.gle/hackathon2024'
-        },
-        {
-            title: 'Web Development Workshop',
-            description: 'Modern web teknolojileri workshop\'u: React, Next.js ve Tailwind CSS ile proje geliştirme.',
-            date: new Date('2024-11-30'),
-            status: 'Active',
-            location: 'Online - Zoom',
-            registrationLink: 'https://forms.gle/webworkshop'
-        },
-        {
-            title: 'Yapay Zeka ve Makine Öğrenmesi Semineri',
-            description: 'AI ve ML temellerini öğreneceğiniz, pratik uygulamalar yapacağınız bir seminer.',
-            date: new Date('2024-12-05'),
-            status: 'Active',
-            location: 'Haliç Üniversitesi - Konferans Salonu',
-            registrationLink: 'https://forms.gle/aiseminar'
-        },
         {
             title: 'Career Day - Tech Talks',
             description: 'Sektör profesyonelleri ile tanışma ve kariyer planlama etkinliği.',
