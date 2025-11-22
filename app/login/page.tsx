@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
@@ -14,14 +15,16 @@ export default function LoginPage() {
         const res = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ password }),
+            body: JSON.stringify({ username, password }),
         });
+
+        const data = await res.json();
 
         if (res.ok) {
             router.push('/console-2024');
             router.refresh();
         } else {
-            setError('Geçersiz şifre');
+            setError(data.error || 'Giriş başarısız');
         }
     };
 
@@ -32,6 +35,20 @@ export default function LoginPage() {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
+                        <label htmlFor="username" className="block text-sm font-medium text-gray-300 mb-1">
+                            Kullanıcı Adı
+                        </label>
+                        <input
+                            type="text"
+                            id="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            className="w-full bg-primary-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                            placeholder="Kullanıcı adınızı girin"
+                        />
+                    </div>
+
+                    <div>
                         <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
                             Şifre
                         </label>
@@ -41,7 +58,7 @@ export default function LoginPage() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-full bg-primary-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                            placeholder="Yönetici şifresini girin"
+                            placeholder="Şifrenizi girin"
                         />
                     </div>
 

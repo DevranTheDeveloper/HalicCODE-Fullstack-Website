@@ -59,3 +59,12 @@ model News {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model AdminUser {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String   // Hashed password
+  role      String   // "SUPER_ADMIN", "MEMBER_MANAGER", "EVENT_MANAGER", "NEWS_MANAGER"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
