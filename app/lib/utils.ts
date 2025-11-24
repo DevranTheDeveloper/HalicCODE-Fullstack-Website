@@ -4,10 +4,6 @@ export function transformGoogleDriveUrl(url: string): string {
     // Check if it's a Google Drive URL
     if (url.includes('drive.google.com')) {
         // Extract File ID
-        // Patterns:
-        // 1. /file/d/FILE_ID/view
-        // 2. id=FILE_ID
-
         let fileId = '';
         const fileIdMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
 
@@ -21,16 +17,37 @@ export function transformGoogleDriveUrl(url: string): string {
         }
 
         if (fileId) {
-            // Return the direct download/view URL that works with <Image>
-            // Note: 'uc?export=view&id=' is the standard way, but sometimes Next.js Image optimization 
-            // works better with 'lh3.googleusercontent.com' which is what Drive uses internally.
-            // However, we can't easily get the lh3 URL without fetching.
-            // The 'uc?export=view' link redirects to the actual image. 
-            // Next.js image optimization might fail on redirects if not configured, 
-            // but let's try the standard direct link first.
             return `https://drive.google.com/uc?export=view&id=${fileId}`;
         }
     }
 
-    return url;
+    // Check if it's already a CDN or direct image URL (these usually work fine)
+    const directImageDomains = [
+        'cloudinary.com',
+        'unsplash.com',
+        'images.unsplash.com',
+        'cdn.',
+        'imgur.com',
+        'i.imgur.com',
+        'githubusercontent.com',
+        'imagekit.io',
+        'imgix.net'
+    ];
+
+    const isDirectImage = directImageDomains.some(domain => url.includes(domain));
+
+    if (isDirectImage) {
+        return url;
+    }
+
+    // For other URLs (Google Images, random sites, etc.), use a CORS proxy
+    // wsrv.nl is a free image proxy that helps bypass CORS and hotlink protection
+    // It also optimizes images automatically
+    try {
+        const encodedUrl = encodeURIComponent(url);
+        return `https://wsrv.nl/?url=${encodedUrl}`;
+    } catch (error) {
+        // If encoding fails, return original URL
+        return url;
+    }
 }
