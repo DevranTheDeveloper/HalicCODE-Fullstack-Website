@@ -56,6 +56,7 @@ async function getEvents() {
       date: { lt: now }
     },
     orderBy: { date: 'desc' },
+    take: 3,
     select: {
       id: true,
       title: true,
