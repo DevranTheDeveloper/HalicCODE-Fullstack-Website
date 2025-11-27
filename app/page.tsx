@@ -9,8 +9,13 @@ import Starfield from '../components/Starfield';
 const prisma = new PrismaClient();
 
 async function getEvents() {
+  const now = new Date();
+
   const activeEvents = await prisma.event.findMany({
-    where: { status: 'Active' },
+    where: {
+      status: 'Active',
+      date: { gte: now }
+    },
     orderBy: { date: 'asc' },
     select: {
       id: true,
@@ -25,8 +30,12 @@ async function getEvents() {
       updatedAt: true
     }
   });
+
   const futureEvents = await prisma.event.findMany({
-    where: { status: 'Future' },
+    where: {
+      status: 'Future',
+      date: { gte: now }
+    },
     orderBy: { date: 'asc' },
     select: {
       id: true,
@@ -41,11 +50,31 @@ async function getEvents() {
       updatedAt: true
     }
   });
-  return { activeEvents, futureEvents };
+
+  const pastEvents = await prisma.event.findMany({
+    where: {
+      date: { lt: now }
+    },
+    orderBy: { date: 'desc' },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      date: true,
+      location: true,
+      imageUrl: true,
+      status: true,
+      registrationLink: true,
+      createdAt: true,
+      updatedAt: true
+    }
+  });
+
+  return { activeEvents, futureEvents, pastEvents };
 }
 
 export default async function Home() {
-  const { activeEvents, futureEvents } = await getEvents();
+  const { activeEvents, futureEvents, pastEvents } = await getEvents();
 
   return (
     <div className="flex flex-col pb-16">
@@ -136,7 +165,7 @@ export default async function Home() {
 
         {/* Events Section */}
         <div id="events" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-16">
-          <EventsGrid activeEvents={activeEvents} futureEvents={futureEvents} />
+          <EventsGrid activeEvents={activeEvents} futureEvents={futureEvents} pastEvents={pastEvents} />
         </div>
       </div>
     </div>

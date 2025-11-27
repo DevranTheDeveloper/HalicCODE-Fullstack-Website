@@ -14,7 +14,7 @@ type Event = {
     registrationLink: string | null;
 };
 
-export default function EventsGrid({ activeEvents, futureEvents }: { activeEvents: Event[], futureEvents: Event[] }) {
+export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: { activeEvents: Event[], futureEvents: Event[], pastEvents: Event[] }) {
     const [hoveredEvent, setHoveredEvent] = useState<Event | null>(null);
     const [isClosing, setIsClosing] = useState(false);
 
@@ -37,6 +37,10 @@ export default function EventsGrid({ activeEvents, futureEvents }: { activeEvent
             document.body.style.overflow = 'unset';
         };
     }, [hoveredEvent]);
+
+    const isPastEvent = (event: Event) => {
+        return new Date(event.date) < new Date();
+    };
 
     return (
         <div className="space-y-16">
@@ -93,7 +97,7 @@ export default function EventsGrid({ activeEvents, futureEvents }: { activeEvent
                             </div>
 
                             <div className="mt-6 pt-6 border-t border-gray-800 flex-shrink-0">
-                                {hoveredEvent.registrationLink ? (
+                                {hoveredEvent.registrationLink && !isPastEvent(hoveredEvent) ? (
                                     <a
                                         href={hoveredEvent.registrationLink}
                                         target="_blank"
@@ -162,11 +166,36 @@ export default function EventsGrid({ activeEvents, futureEvents }: { activeEvent
                     </div>
                 )}
             </section>
+
+            {/* Past Events */}
+            <section>
+                <div className="section-header">
+                    <div className="section-indicator bg-gray-500" />
+                    <h2 className="section-title">Geçmiş Etkinlikler</h2>
+                </div>
+
+                {pastEvents.length > 0 ? (
+                    <div className="events-grid">
+                        {pastEvents.map((event) => (
+                            <EventCard
+                                key={event.id}
+                                event={event}
+                                type="past"
+                                onHover={() => setHoveredEvent(event)}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="empty-state">
+                        <p className="text-gray-400">Henüz geçmiş etkinlik bulunmamaktadır.</p>
+                    </div>
+                )}
+            </section>
         </div>
     );
 }
 
-function EventCard({ event, type, onHover }: { event: Event, type: 'active' | 'future', onHover: () => void }) {
+function EventCard({ event, type, onHover }: { event: Event, type: 'active' | 'future' | 'past', onHover: () => void }) {
     return (
         <div
             className="event-card group cursor-pointer"
