@@ -77,8 +77,8 @@ export default function Chatbot() {
 
     // Link'leri buton olarak render et
     const renderMessageWithButtons = (content: string) => {
-        // URL regex pattern
-        const urlPattern = /(https?:\/\/[^\s]+)/g;
+        // URL regex pattern (http/https veya /news/ ile başlayanlar)
+        const urlPattern = /((?:https?:\/\/[^\s]+)|(?:\/news\/[^\s]+))/g;
         const parts = content.split(urlPattern);
 
         return (
