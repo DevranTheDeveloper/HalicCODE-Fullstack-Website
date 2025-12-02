@@ -1,10 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { getTranslations } from 'next-intl/server';
 
-import EventsGrid from './components/EventsGrid';
-import NewsSection from './components/NewsSection';
-import Starfield from '../components/Starfield';
+import EventsGrid from '../components/EventsGrid';
+import NewsSection from '../components/NewsSection';
+import Starfield from '../../components/Starfield';
 
 const prisma = new PrismaClient();
 
@@ -76,6 +77,7 @@ async function getEvents() {
 
 export default async function Home() {
   const { activeEvents, futureEvents, pastEvents } = await getEvents();
+  const t = await getTranslations('Home');
 
   return (
     <div className="flex flex-col pb-16">
@@ -108,24 +110,24 @@ export default async function Home() {
           <div className="relative">
             <div className="absolute -inset-1 opacity-25 animate-pulse"></div>
             <h1 className="hero-title relative">
-              Haliç CODE
+              {t('heroTitle')}
             </h1>
           </div>
           <p className="hero-subtitle">
-            Community Of Developer Engineers
+            {t('heroSubtitle')}
           </p>
           <div className="hero-actions">
             <Link
               href="/members"
               className="btn-primary"
             >
-              Üyelerimizle Tanışın
+              {t('meetMembers')}
             </Link>
             <a
               href="#events"
               className="btn-secondary"
             >
-              Etkinlikleri Gör
+              {t('viewEvents')}
             </a>
           </div>
         </div>
@@ -141,22 +143,22 @@ export default async function Home() {
               <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/30 transition-colors">
                 <span className="text-2xl">🚀</span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Projeler Geliştirin</h3>
-              <p className="text-gray-400">Gerçek dünya projelerinde işbirliği yapın ve öğrenci arkadaşlarınızla portföyünüzü oluşturun.</p>
+              <h3 className="text-xl font-bold text-white mb-2">{t('projectsTitle')}</h3>
+              <p className="text-gray-400">{t('projectsDesc')}</p>
             </div>
             <div className="bg-primary-light/50 backdrop-blur-sm border border-gray-800 p-8 rounded-2xl hover:border-accent/50 transition-colors group">
               <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-accent/30 transition-colors">
                 <span className="text-2xl">💡</span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Birlikte Öğrenin</h3>
-              <p className="text-gray-400">Yeni teknolojilerde uzmanlaşmak için topluluğumuzun sağladığı eğitimlere katılın!</p>
+              <h3 className="text-xl font-bold text-white mb-2">{t('learnTitle')}</h3>
+              <p className="text-gray-400">{t('learnDesc')}</p>
             </div>
             <div className="bg-primary-light/50 backdrop-blur-sm border border-gray-800 p-8 rounded-2xl hover:border-blue-500/50 transition-colors group">
               <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
                 <span className="text-2xl">🤝</span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Ağ Kurun</h3>
-              <p className="text-gray-400">Kariyerinizi büyütmek için sektör profesyonelleri ve benzer düşünen akranlarınızla ve alanında deneyimli profesyonellerle bağlantı kurun.</p>
+              <h3 className="text-xl font-bold text-white mb-2">{t('networkTitle')}</h3>
+              <p className="text-gray-400">{t('networkDesc')}</p>
             </div>
           </div>
         </section>

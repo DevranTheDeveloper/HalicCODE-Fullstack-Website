@@ -1,0 +1,34 @@
+{
+    "Navbar": {
+        "home": "Ana Sayfa",
+        "about": "Hakkımızda",
+        "events": "Etkinlikler",
+        "members": "Üyeler",
+        "news": "Haberler",
+        "login": "Giriş Yap",
+        "admin": "Yönetim Paneli",
+        "logout": "Çıkış Yap",
+        "language": "Dil"
+    },
+    "Home": {
+        "heroTitle": "Haliç CODE",
+        "heroSubtitle": "Community Of Developer Engineers",
+        "meetMembers": "Üyelerimizle Tanışın",
+        "viewEvents": "Etkinlikleri Gör",
+        "projectsTitle": "Projeler Geliştirin",
+        "projectsDesc": "Gerçek dünya projelerinde işbirliği yapın ve öğrenci arkadaşlarınızla portföyünüzü oluşturun.",
+        "learnTitle": "Birlikte Öğrenin",
+        "learnDesc": "Yeni teknolojilerde uzmanlaşmak için topluluğumuzun sağladığı eğitimlere katılın!",
+        "networkTitle": "Ağ Kurun",
+        "networkDesc": "Kariyerinizi büyütmek için sektör profesyonelleri ve benzer düşünen akranlarınızla bağlantı kurun.",
+        "activeEvents": "Aktif Etkinlikler",
+        "futureEvents": "Gelecek Etkinlikler",
+        "pastEvents": "Geçmiş Etkinlikler",
+        "noActiveEvents": "Şu anda aktif etkinlik bulunmamaktadır.",
+        "noFutureEvents": "Gelecek etkinlikler için takipte kalın!",
+        "noPastEvents": "Henüz geçmiş etkinlik bulunmamaktadır.",
+        "registerNow": "Şimdi Kayıt Ol!",
+        "registrationClosed": "Kayıtlar Kapalı!",
+        "readMore": "Haberin Devamını Oku"
+    }
+}

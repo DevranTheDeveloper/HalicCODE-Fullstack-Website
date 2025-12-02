@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './i18n/routing';
 
 const SECRET_KEY = new TextEncoder().encode(
     process.env.JWT_SECRET || 'secret-key-change-me'
 );
+
+const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
     // Check if the path starts with /console-2024
@@ -41,12 +45,15 @@ export async function middleware(request: NextRequest) {
             // Invalid token
             return NextResponse.redirect(new URL('/login', request.url));
         }
+        return NextResponse.next();
     }
 
-    return NextResponse.next();
+    // Use intl middleware for other paths
+    return intlMiddleware(request);
 }
 
 export const config = {
-    matcher: ['/console-2024', '/console-2024/:path*'],
+    // Match only internationalized pathnames
+    matcher: ['/', '/(tr|en)/:path*', '/console-2024/:path*']
 };
 
