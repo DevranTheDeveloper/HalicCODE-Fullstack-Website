@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
     try {
-        const { message } = await req.json();
+        const { message, history } = await req.json();
 
         if (!message) {
             return NextResponse.json({ error: 'Mesaj gerekli' }, { status: 400 });
@@ -83,7 +83,7 @@ ${events.filter(e => {
         ).join('\n') || 'Planlanan gelecek etkinlik yok'}
 
 SON HABERLER:
-${news.map(n => `- ${n.title} (${new Date(n.date).toLocaleDateString('tr-TR')})`).join('\n')}
+${news.map(n => `- ${n.title} (${new Date(n.date).toLocaleDateString('tr-TR')}) | LİNK: ${process.env.NEXT_PUBLIC_APP_URL || ''}/news/${n.id}`).join('\n')}
 `.trim();
 
         // System prompt
@@ -98,13 +98,21 @@ ${news.map(n => `- ${n.title} (${new Date(n.date).toLocaleDateString('tr-TR')})`
 6. Her zaman Türkçe konuş
 7. Site dışı konularda kibar bir şekilde reddet
 8. Kullanıcı kayıt formu/link isterse, etkinliğin KAYIT LİNKİ'ni mutlaka paylaş
-9. Link varsa direkt URL'yi ver, yoksa "Kayıt linki henüz paylaşılmadı" de
+9. Kullanıcı bir haber hakkında detay isterse veya "daha fazla bilgi" derse, haberin LİNK'ini mutlaka paylaş.
+10. Link varsa direkt URL'yi ver, yoksa "Link henüz paylaşılmadı" de
 
 TOPLULUK VERİLERİ:
 ${context}
 
-Kullanıcı sorusuna göre en alakalı bilgiyi bul ve doğal bir şekilde sun. Eğer tam eşleşme yoksa benzer bilgileri paylaş. Kayıt linki sorulduğunda mutlaka linki paylaş.`;
+Kullanıcı sorusuna göre en alakalı bilgiyi bul ve doğal bir şekilde sun. Eğer tam eşleşme yoksa benzer bilgileri paylaş. Kayıt linki veya haber linki sorulduğunda mutlaka linki paylaş.`;
 
+        // Geçmiş mesajları hazırla (sadece son 5 mesajı alalım ki context şişmesin)
+        const previousMessages = Array.isArray(history)
+            ? history.slice(-5).map((msg: any) => ({
+                role: msg.role,
+                content: msg.content
+            }))
+            : [];
 
         // Groq API çağrısı
         const apiResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -117,6 +125,7 @@ Kullanıcı sorusuna göre en alakalı bilgiyi bul ve doğal bir şekilde sun. E
                 model: 'llama-3.3-70b-versatile',
                 messages: [
                     { role: 'system', content: systemPrompt },
+                    ...previousMessages,
                     { role: 'user', content: message }
                 ],
                 max_tokens: 500,

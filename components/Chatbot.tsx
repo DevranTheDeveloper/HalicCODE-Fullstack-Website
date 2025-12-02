@@ -39,7 +39,10 @@ export default function Chatbot() {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userMessage })
+                body: JSON.stringify({
+                    message: userMessage,
+                    history: messages // Geçmiş mesajları gönder
+                })
             });
 
             const data = await response.json();
@@ -83,6 +86,9 @@ export default function Chatbot() {
                 {parts.map((part, index) => {
                     // Eğer bu bir link ise
                     if (part.match(urlPattern)) {
+                        const isNewsLink = part.includes('/news/');
+                        const buttonText = isNewsLink ? 'Haberin Devamını Oku' : 'Şimdi Katıl!';
+
                         return (
                             <a
                                 key={index}
@@ -91,10 +97,16 @@ export default function Chatbot() {
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-md hover:shadow-lg group"
                             >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                                Şimdi Katıl!
+                                {isNewsLink ? (
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                                    </svg>
+                                ) : (
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                )}
+                                {buttonText}
                                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
