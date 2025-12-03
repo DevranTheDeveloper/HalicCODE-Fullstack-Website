@@ -21,9 +21,12 @@ async function getEvents() {
     select: {
       id: true,
       title: true,
+      titleTranslations: true,
       description: true,
+      descriptionTranslations: true,
       date: true,
       location: true,
+      locationTranslations: true,
       imageUrl: true,
       status: true,
       registrationLink: true,
@@ -41,9 +44,12 @@ async function getEvents() {
     select: {
       id: true,
       title: true,
+      titleTranslations: true,
       description: true,
+      descriptionTranslations: true,
       date: true,
       location: true,
+      locationTranslations: true,
       imageUrl: true,
       status: true,
       registrationLink: true,
@@ -61,9 +67,12 @@ async function getEvents() {
     select: {
       id: true,
       title: true,
+      titleTranslations: true,
       description: true,
+      descriptionTranslations: true,
       date: true,
       location: true,
+      locationTranslations: true,
       imageUrl: true,
       status: true,
       registrationLink: true,
@@ -75,8 +84,17 @@ async function getEvents() {
   return { activeEvents, futureEvents, pastEvents };
 }
 
+async function getNews() {
+  const news = await prisma.news.findMany({
+    orderBy: { date: 'desc' },
+    take: 3,
+  });
+  return news;
+}
+
 export default async function Home() {
   const { activeEvents, futureEvents, pastEvents } = await getEvents();
+  const news = await getNews();
   const t = await getTranslations('Home');
 
   return (
@@ -164,7 +182,7 @@ export default async function Home() {
         </section>
 
         {/* News Section */}
-        <NewsSection />
+        <NewsSection news={news} />
 
         {/* Events Section */}
         <div id="events" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-16">

@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { transformGoogleDriveUrl } from './lib/utils';
+import { translateContent } from './lib/translator';
 
 const prisma = new PrismaClient();
 
@@ -86,13 +87,21 @@ export async function createEvent(formData: FormData) {
     const status = formData.get('status') as string;
     const registrationLink = formData.get('registrationLink') as string;
 
+    // Translate content
+    const titleTranslations = await translateContent(title);
+    const descriptionTranslations = await translateContent(description);
+    const locationTranslations = await translateContent(location);
+
     await prisma.event.create({
         data: {
             title,
+            titleTranslations,
             description,
+            descriptionTranslations,
             date,
             status,
             location,
+            locationTranslations,
             imageUrl: imageUrl || null,
             registrationLink: registrationLink || null,
         },
@@ -112,14 +121,22 @@ export async function updateEvent(id: number, formData: FormData) {
     const status = formData.get('status') as string;
     const registrationLink = formData.get('registrationLink') as string;
 
+    // Translate content
+    const titleTranslations = await translateContent(title);
+    const descriptionTranslations = await translateContent(description);
+    const locationTranslations = await translateContent(location);
+
     await prisma.event.update({
         where: { id },
         data: {
             title,
+            titleTranslations,
             description,
+            descriptionTranslations,
             date,
             status,
             location,
+            locationTranslations,
             imageUrl: imageUrl || null,
             registrationLink: registrationLink || null,
         },
@@ -148,10 +165,16 @@ export async function createNews(formData: FormData) {
     const date = new Date(formData.get('date') as string);
     const photos = formData.get('photos') as string || '[]';
 
+    // Translate content
+    const titleTranslations = await translateContent(title);
+    const contentTranslations = await translateContent(content);
+
     await prisma.news.create({
         data: {
             title,
+            titleTranslations,
             content,
+            contentTranslations,
             imageUrl: imageUrl || null,
             date: date || new Date(),
             photos,
@@ -170,11 +193,17 @@ export async function updateNews(id: number, formData: FormData) {
     const date = new Date(formData.get('date') as string);
     const photos = formData.get('photos') as string || '[]';
 
+    // Translate content
+    const titleTranslations = await translateContent(title);
+    const contentTranslations = await translateContent(content);
+
     await prisma.news.update({
         where: { id },
         data: {
             title,
+            titleTranslations,
             content,
+            contentTranslations,
             imageUrl: imageUrl || null,
             date: date || new Date(),
             photos,
@@ -202,10 +231,14 @@ export async function createRole(formData: FormData) {
     const nameTr = formData.get('nameTr') as string;
     const order = parseInt(formData.get('order') as string) || 0;
 
+    // Translate content
+    const nameTranslations = await translateContent(nameTr || name);
+
     await prisma.role.create({
         data: {
             name,
             nameTr,
+            nameTranslations,
             order,
         },
     });
@@ -220,11 +253,15 @@ export async function updateRole(id: number, formData: FormData) {
     const nameTr = formData.get('nameTr') as string;
     const order = parseInt(formData.get('order') as string) || 0;
 
+    // Translate content
+    const nameTranslations = await translateContent(nameTr || name);
+
     await prisma.role.update({
         where: { id },
         data: {
             name,
             nameTr,
+            nameTranslations,
             order,
         },
     });

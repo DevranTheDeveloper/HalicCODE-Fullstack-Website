@@ -1,19 +1,31 @@
-import { PrismaClient } from '@prisma/client';
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLocale } from 'next-intl';
 
-const prisma = new PrismaClient();
+type NewsItem = {
+    id: number;
+    title: string;
+    titleTranslations: string | null;
+    content: string;
+    contentTranslations: string | null;
+    imageUrl: string | null;
+    date: Date;
+};
 
-async function getNews() {
-    const news = await prisma.news.findMany({
-        orderBy: { date: 'desc' },
-        take: 3, // Show only the latest 3 news items
-    });
-    return news;
-}
+export default function NewsSection({ news }: { news: NewsItem[] }) {
+    const locale = useLocale();
 
-export default async function NewsSection() {
-    const news = await getNews();
+    const getLocalizedContent = (content: string, translations: string | null) => {
+        if (!translations) return content;
+        try {
+            const parsed = JSON.parse(translations);
+            return parsed[locale] || content;
+        } catch (e) {
+            return content;
+        }
+    };
 
     if (news.length === 0) {
         return null;
@@ -37,7 +49,7 @@ export default async function NewsSection() {
                             {item.imageUrl ? (
                                 <Image
                                     src={item.imageUrl}
-                                    alt={item.title}
+                                    alt={getLocalizedContent(item.title, item.titleTranslations)}
                                     fill
                                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
@@ -52,10 +64,10 @@ export default async function NewsSection() {
                         </div>
                         <div className="p-6 flex flex-col flex-grow">
                             <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2">
-                                {item.title}
+                                {getLocalizedContent(item.title, item.titleTranslations)}
                             </h3>
                             <p className="text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
-                                {item.content}
+                                {getLocalizedContent(item.content, item.contentTranslations)}
                             </p>
                             <div className="flex items-center gap-2 text-blue-400 text-sm font-medium group-hover:gap-3 transition-all">
                                 <span>Devamını Oku</span>

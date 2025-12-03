@@ -6,14 +6,15 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:../dev.db"
 }
 
 model Role {
   id        Int      @id @default(autoincrement())
   name      String   @unique
   nameTr    String   // Türkçe çevirisi
+  nameTranslations String? @default("{}") // Diğer diller için çeviriler { "en": "...", "fr": "..." }
   order     Int      @default(0) // Sıralama için
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -39,11 +40,14 @@ model Member {
 model Event {
   id          Int      @id @default(autoincrement())
   title       String
+  titleTranslations String? @default("{}") // { "en": "...", "fr": "..." }
   description String
+  descriptionTranslations String? @default("{}") // { "en": "...", "fr": "..." }
   date        DateTime
   status      String   // "Active", "Future"
   imageUrl    String?
   location    String?
+  locationTranslations String? @default("{}") // { "en": "...", "fr": "..." }
   registrationLink String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -52,7 +56,9 @@ model Event {
 model News {
   id        Int      @id @default(autoincrement())
   title     String
+  titleTranslations String? @default("{}") // { "en": "...", "fr": "..." }
   content   String
+  contentTranslations String? @default("{}") // { "en": "...", "fr": "..." }
   imageUrl  String?  // Kapak fotoğrafı
   photos    String   @default("[]") // Ek fotoğraflar JSON array olarak
   date      DateTime @default(now())
