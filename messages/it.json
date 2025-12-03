@@ -1,0 +1,34 @@
+{
+    "Navbar": {
+        "home": "Home",
+        "about": "Chi siamo",
+        "events": "Eventi",
+        "members": "Membri",
+        "news": "Notizie",
+        "login": "Accesso",
+        "admin": "Pannello di amministrazione",
+        "logout": "Disconnettersi",
+        "language": "Lingua"
+    },
+    "Home": {
+        "heroTitle": "Haliç CODE",
+        "heroSubtitle": "Comunità di Ingegneri Sviluppatori",
+        "meetMembers": "Incontra i nostri membri",
+        "viewEvents": "Visualizza eventi",
+        "projectsTitle": "Sviluppa progetti",
+        "projectsDesc": "Collabora su progetti reali e costruisci il tuo portfolio con altri studenti.",
+        "learnTitle": "Impara insieme",
+        "learnDesc": "Partecipa ai workshop offerti dalla nostra comunità per padroneggiare nuove tecnologie!",
+        "networkTitle": "Costruisci una rete",
+        "networkDesc": "Connettiti con professionisti del settore e colleghi con idee simili per far crescere la tua carriera.",
+        "activeEvents": "Eventi attivi",
+        "futureEvents": "Eventi futuri",
+        "pastEvents": "Eventi passati",
+        "noActiveEvents": "Non ci sono eventi attivi al momento.",
+        "noFutureEvents": "Resta sintonizzato per i futuri eventi!",
+        "noPastEvents": "Non ci sono ancora eventi passati.",
+        "registerNow": "Registrati ora!",
+        "registrationClosed": "Iscrizioni chiuse!",
+        "readMore": "Leggi di più"
+    }
+}

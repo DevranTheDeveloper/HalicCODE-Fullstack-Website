@@ -79,6 +79,30 @@ export default function Navbar() {
                                             >
                                                 🇬🇧 English
                                             </button>
+                                            <button
+                                                onClick={() => changeLanguage('fr')}
+                                                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-4 py-2 text-sm w-full text-left"
+                                            >
+                                                🇫🇷 Français
+                                            </button>
+                                            <button
+                                                onClick={() => changeLanguage('it')}
+                                                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-4 py-2 text-sm w-full text-left"
+                                            >
+                                                🇮🇹 Italiano
+                                            </button>
+                                            <button
+                                                onClick={() => changeLanguage('es')}
+                                                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-4 py-2 text-sm w-full text-left"
+                                            >
+                                                🇪🇸 Español
+                                            </button>
+                                            <button
+                                                onClick={() => changeLanguage('ru')}
+                                                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-4 py-2 text-sm w-full text-left"
+                                            >
+                                                🇷🇺 Русский
+                                            </button>
                                         </div>
                                     </div>
                                 )}
@@ -141,6 +165,30 @@ export default function Navbar() {
                                 className="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium w-full text-left"
                             >
                                 🇬🇧 English
+                            </button>
+                            <button
+                                onClick={() => changeLanguage('fr')}
+                                className="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                            >
+                                🇫🇷 Français
+                            </button>
+                            <button
+                                onClick={() => changeLanguage('it')}
+                                className="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                            >
+                                🇮🇹 Italiano
+                            </button>
+                            <button
+                                onClick={() => changeLanguage('es')}
+                                className="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                            >
+                                🇪🇸 Español
+                            </button>
+                            <button
+                                onClick={() => changeLanguage('ru')}
+                                className="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                            >
+                                🇷🇺 Русский
                             </button>
                         </div>
                     </div>
