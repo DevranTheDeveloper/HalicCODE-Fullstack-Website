@@ -1,34 +1,34 @@
 {
-    "Navbar": {
-        "home": "Главная",
-        "about": "О нас",
-        "events": "События",
-        "members": "Участники",
-        "news": "Новости",
-        "login": "Войти",
-        "admin": "Панель администратора",
-        "logout": "Выйти",
-        "language": "Язык"
-    },
-    "Home": {
-        "heroTitle": "Haliç CODE",
-        "heroSubtitle": "Сообщество инженеров-разработчиков",
-        "meetMembers": "Познакомьтесь с участниками",
-        "viewEvents": "Посмотреть события",
-        "projectsTitle": "Разрабатывайте проекты",
-        "projectsDesc": "Сотрудничайте над реальными проектами и создавайте свое портфолио вместе с другими студентами.",
-        "learnTitle": "Учитесь вместе",
-        "learnDesc": "Присоединяйтесь к семинарам нашего сообщества, чтобы освоить новые технологии!",
-        "networkTitle": "Создавайте сеть",
-        "networkDesc": "Общайтесь с профессионалами отрасли и единомышленниками для развития вашей карьеры.",
-        "activeEvents": "Активные события",
-        "futureEvents": "Будущие события",
-        "pastEvents": "Прошедшие события",
-        "noActiveEvents": "На данный момент активных событий нет.",
-        "noFutureEvents": "Следите за будущими событиями!",
-        "noPastEvents": "Прошедших событий пока нет.",
-        "registerNow": "Зарегистрироваться сейчас!",
-        "registrationClosed": "Регистрация закрыта!",
-        "readMore": "Читать далее"
-    }
+  "Navbar": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "events": "Etkinlikler",
+    "members": "Члены",
+    "news": "Haberler",
+    "login": "Giriş Yap",
+    "admin": "Yönetim Paneli",
+    "logout": "Выход",
+    "language": "Dil"
+  },
+  "Home": {
+    "heroTitle": "Haliç CODE",
+    "heroSubtitle": "Community Of Developer Engineers",
+    "meetMembers": "Знакомьтесь с нашими членами",
+    "viewEvents": "Etkinlikleri Gör",
+    "projectsTitle": "Projeler Geliştirin",
+    "projectsDesc": "Gerçek dünya projelerinde işbirliği yapın ve öğrenci arkadaşlarınızla portföyünüzü oluşturun.",
+    "learnTitle": "Вместе учимся",
+    "learnDesc": "Yeni teknolojilerde uzmanlaşmak için topluluğumuzun sağladığı eğitimlere katılın!",
+    "networkTitle": "Ağ Kurun",
+    "networkDesc": "Kariyerinizi büyütmek için sektör profesyonelleri ve benzer düşünen akranlarınızla bağlantı kurun.",
+    "activeEvents": "Активные мероприятия",
+    "futureEvents": "Gelecek Etkinlikler",
+    "pastEvents": "Geçmiş Etkinlikler",
+    "noActiveEvents": "Şu anda aktif etkinlik bulunmamaktadır.",
+    "noFutureEvents": "Следите за будущими мероприятиями!",
+    "noPastEvents": "Henüz geçmiş etkinlik bulunmamaktadır.",
+    "registerNow": "Şimdi Kayıt Ol!",
+    "registrationClosed": "Kayıtlar Kapalı!",
+    "readMore": "Читать дальше новость"
+  }
 }

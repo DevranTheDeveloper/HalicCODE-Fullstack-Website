@@ -1,34 +1,34 @@
 {
-    "Navbar": {
-        "home": "Home",
-        "about": "About Us",
-        "events": "Events",
-        "members": "Members",
-        "news": "News",
-        "login": "Login",
-        "admin": "Admin Panel",
-        "logout": "Logout",
-        "language": "Language"
-    },
-    "Home": {
-        "heroTitle": "Haliç CODE",
-        "heroSubtitle": "Community Of Developer Engineers",
-        "meetMembers": "Meet Our Members",
-        "viewEvents": "View Events",
-        "projectsTitle": "Develop Projects",
-        "projectsDesc": "Collaborate on real-world projects and build your portfolio with fellow students.",
-        "learnTitle": "Learn Together",
-        "learnDesc": "Join workshops provided by our community to master new technologies!",
-        "networkTitle": "Build Network",
-        "networkDesc": "Connect with industry professionals and like-minded peers to grow your career.",
-        "activeEvents": "Active Events",
-        "futureEvents": "Future Events",
-        "pastEvents": "Past Events",
-        "noActiveEvents": "There are no active events at the moment.",
-        "noFutureEvents": "Stay tuned for future events!",
-        "noPastEvents": "There are no past events yet.",
-        "registerNow": "Register Now!",
-        "registrationClosed": "Registration Closed!",
-        "readMore": "Read More"
-    }
+  "Navbar": {
+    "home": "Home Page",
+    "about": "About Us",
+    "events": "Events",
+    "members": "Members",
+    "news": "News",
+    "login": "Login",
+    "admin": "Control Panel",
+    "logout": "Log Out",
+    "language": "Language"
+  },
+  "Home": {
+    "heroTitle": "Golden Horn CODE",
+    "heroSubtitle": "Geliştirme Mühendisleri Topluluğu",
+    "meetMembers": "Meet Our Members",
+    "viewEvents": "View Events",
+    "projectsTitle": "Develop Projects",
+    "projectsDesc": "Collaborate on real-world projects and build your portfolio with your fellow students.",
+    "learnTitle": "Learn Together",
+    "learnDesc": "Join the training provided by our community to specialize in new technologies!",
+    "networkTitle": "Build a Network",
+    "networkDesc": "Connect with industry professionals and like-minded peers to grow your career.",
+    "activeEvents": "Active Activities",
+    "futureEvents": "Upcoming Events",
+    "pastEvents": "Past Events",
+    "noActiveEvents": "There is currently no active activity.",
+    "noFutureEvents": "Stay tuned for upcoming events!",
+    "noPastEvents": "There are no past events yet.",
+    "registerNow": "Sign Up Now!",
+    "registrationClosed": "Registration is Closed",
+    "readMore": "Read the rest of the news"
+  }
 }

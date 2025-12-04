@@ -1,34 +1,34 @@
 {
-    "Navbar": {
-        "home": "Inicio",
-        "about": "Sobre nosotros",
-        "events": "Eventos",
-        "members": "Miembros",
-        "news": "Noticias",
-        "login": "Iniciar sesión",
-        "admin": "Panel de administración",
-        "logout": "Cerrar sesión",
-        "language": "Idioma"
-    },
-    "Home": {
-        "heroTitle": "Haliç CODE",
-        "heroSubtitle": "Comunidad de Ingenieros Desarrolladores",
-        "meetMembers": "Conoce a nuestros miembros",
-        "viewEvents": "Ver eventos",
-        "projectsTitle": "Desarrollar proyectos",
-        "projectsDesc": "Colabora en proyectos del mundo real y construye tu portafolio con otros estudiantes.",
-        "learnTitle": "Aprender juntos",
-        "learnDesc": "¡Únete a los talleres ofrecidos por nuestra comunidad para dominar nuevas tecnologías!",
-        "networkTitle": "Construir red",
-        "networkDesc": "Conéctate con profesionales de la industria y compañeros afines para hacer crecer tu carrera.",
-        "activeEvents": "Eventos activos",
-        "futureEvents": "Eventos futuros",
-        "pastEvents": "Eventos pasados",
-        "noActiveEvents": "No hay eventos activos en este momento.",
-        "noFutureEvents": "¡Mantente atento a los futuros eventos!",
-        "noPastEvents": "Aún no hay eventos pasados.",
-        "registerNow": "¡Regístrate ahora!",
-        "registrationClosed": "¡Inscripciones cerradas!",
-        "readMore": "Leer más"
-    }
+  "Navbar": {
+    "home": "Ana Sayfa",
+    "about": "Acerca de nosotros",
+    "events": "Etkinlikler",
+    "members": "Üyeler",
+    "news": "Haberler",
+    "login": "Iniciar sesión",
+    "admin": "Yönetim Paneli",
+    "logout": "Çıkış Yap",
+    "language": "Dil"
+  },
+  "Home": {
+    "heroTitle": "Golden Horn Código",
+    "heroSubtitle": "Community Of Developer Engineers",
+    "meetMembers": "Üyelerimizle Tanışın",
+    "viewEvents": "Etkinlikleri Gör",
+    "projectsTitle": "Desarrollar Proyectos",
+    "projectsDesc": "Gerçek dünya projelerinde işbirliği yapın ve öğrenci arkadaşlarınızla portföyünüzü oluşturun.",
+    "learnTitle": "Birlikte Öğrenin",
+    "learnDesc": "Yeni teknolojilerde uzmanlaşmak için topluluğumuzun sağladığı eğitimlere katılın!",
+    "networkTitle": "Conecta la Red",
+    "networkDesc": "Kariyerinizi büyütmek için sektör profesyonelleri ve benzer düşünen akranlarınızla bağlantı kurun.",
+    "activeEvents": "Aktif Etkinlikler",
+    "futureEvents": "Gelecek Etkinlikler",
+    "pastEvents": "Eventos Pasados",
+    "noActiveEvents": "Şu anda aktif etkinlik bulunmamaktadır.",
+    "noFutureEvents": "¡Mantente al tanto de los próximos eventos!",
+    "noPastEvents": "Henüz geçmiş etkinlik bulunmamaktadır.",
+    "registerNow": "Şimdi Kayıt Ol!",
+    "registrationClosed": "Kayıtlar Kapalı!",
+    "readMore": "Continúa leyendo la noticia"
+  }
 }

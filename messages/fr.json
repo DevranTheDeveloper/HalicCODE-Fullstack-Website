@@ -1,34 +1,34 @@
 {
-    "Navbar": {
-        "home": "Accueil",
-        "about": "À propos",
-        "events": "Événements",
-        "members": "Membres",
-        "news": "Actualités",
-        "login": "Connexion",
-        "admin": "Panneau d'administration",
-        "logout": "Déconnexion",
-        "language": "Langue"
-    },
-    "Home": {
-        "heroTitle": "Haliç CODE",
-        "heroSubtitle": "Communauté des Ingénieurs Développeurs",
-        "meetMembers": "Rencontrez nos membres",
-        "viewEvents": "Voir les événements",
-        "projectsTitle": "Développer des projets",
-        "projectsDesc": "Collaborez sur des projets concrets et construisez votre portfolio avec d'autres étudiants.",
-        "learnTitle": "Apprendre ensemble",
-        "learnDesc": "Rejoignez les ateliers proposés par notre communauté pour maîtriser de nouvelles technologies !",
-        "networkTitle": "Construire un réseau",
-        "networkDesc": "Connectez-vous avec des professionnels de l'industrie et des pairs partageant les mêmes idées pour faire évoluer votre carrière.",
-        "activeEvents": "Événements actifs",
-        "futureEvents": "Événements futurs",
-        "pastEvents": "Événements passés",
-        "noActiveEvents": "Il n'y a pas d'événements actifs pour le moment.",
-        "noFutureEvents": "Restez à l'écoute pour les futurs événements !",
-        "noPastEvents": "Il n'y a pas encore d'événements passés.",
-        "registerNow": "Inscrivez-vous maintenant !",
-        "registrationClosed": "Inscriptions fermées !",
-        "readMore": "Lire la suite"
-    }
+  "Navbar": {
+    "home": "Page d'accueil",
+    "about": "À propos de nous",
+    "events": "Événements",
+    "members": "Membres",
+    "news": "Actualités",
+    "login": "Se connecter",
+    "admin": "Panneau de gestion",
+    "logout": "Déconnexion",
+    "language": "Langue"
+  },
+  "Home": {
+    "heroTitle": "Le détroit du Golfe",
+    "heroSubtitle": "Communauté d'ingénieurs développeurs",
+    "meetMembers": "Rencontrez nos membres",
+    "viewEvents": "Voir les activités",
+    "projectsTitle": "Développez des projets",
+    "projectsDesc": "Collaborez sur des projets du monde réel et créez votre portfolio avec vos camarades étudiants.",
+    "learnTitle": "Apprenons ensemble",
+    "learnDesc": "Participez aux formations proposées par notre communauté pour vous spécialiser dans les nouvelles technologies !",
+    "networkTitle": "Créez un réseau",
+    "networkDesc": "Établissez des liens avec des professionnels du secteur et des pairs partageant vos idées pour faire progresser votre carrière.",
+    "activeEvents": "Activités actives",
+    "futureEvents": "Événements à venir",
+    "pastEvents": "Événements passés",
+    "noActiveEvents": "Il n'y a actuellement aucune activité en cours.",
+    "noFutureEvents": "Restez à l'affût pour les prochains événements !",
+    "noPastEvents": "Il n'y a pas encore d'événement passé.",
+    "registerNow": "Inscrivez-vous maintenant !",
+    "registrationClosed": "Les inscriptions sont fermées !",
+    "readMore": "Lirez la suite de l'article"
+  }
 }
