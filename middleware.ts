@@ -1,14 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
 
 const SECRET_KEY = new TextEncoder().encode(
     process.env.JWT_SECRET || 'secret-key-change-me'
 );
-
-const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
     // Check if the path starts with /console-2024
@@ -48,12 +44,10 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    // Use intl middleware for other paths
-    return intlMiddleware(request);
+    return NextResponse.next();
 }
 
 export const config = {
-    // Match only internationalized pathnames
-    matcher: ['/', '/(tr|en|fr|it|es|ru)/:path*', '/console-2024/:path*']
+    matcher: ['/console-2024/:path*']
 };
 

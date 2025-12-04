@@ -2,30 +2,16 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
 
 type NewsItem = {
     id: number;
     title: string;
-    titleTranslations: string | null;
     content: string;
-    contentTranslations: string | null;
     imageUrl: string | null;
     date: Date;
 };
 
 export default function NewsSection({ news }: { news: NewsItem[] }) {
-    const locale = useLocale();
-
-    const getLocalizedContent = (content: string, translations: string | null) => {
-        if (!translations) return content;
-        try {
-            const parsed = JSON.parse(translations);
-            return parsed[locale] || content;
-        } catch (e) {
-            return content;
-        }
-    };
 
     if (news.length === 0) {
         return null;
@@ -49,7 +35,7 @@ export default function NewsSection({ news }: { news: NewsItem[] }) {
                             {item.imageUrl ? (
                                 <Image
                                     src={item.imageUrl}
-                                    alt={getLocalizedContent(item.title, item.titleTranslations)}
+                                    alt={item.title}
                                     fill
                                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
@@ -64,10 +50,10 @@ export default function NewsSection({ news }: { news: NewsItem[] }) {
                         </div>
                         <div className="p-6 flex flex-col flex-grow">
                             <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2">
-                                {getLocalizedContent(item.title, item.titleTranslations)}
+                                {item.title}
                             </h3>
                             <p className="text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
-                                {getLocalizedContent(item.content, item.contentTranslations)}
+                                {item.content}
                             </p>
                             <div className="flex items-center gap-2 text-blue-400 text-sm font-medium group-hover:gap-3 transition-all">
                                 <span>Devamını Oku</span>

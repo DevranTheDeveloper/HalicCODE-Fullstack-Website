@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import Image from 'next/image';
-import Starfield from '../../../components/Starfield';
+import Starfield from '../../components/Starfield';
 
 const prisma = new PrismaClient();
 

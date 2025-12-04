@@ -1,15 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import Image from 'next/image';
-import { Link } from '@/i18n/routing';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getLocale } from 'next-intl/server';
 
 const prisma = new PrismaClient();
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const newsId = parseInt(id);
-    const locale = await getLocale();
 
     if (isNaN(newsId)) {
         notFound();
@@ -23,20 +21,6 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
         notFound();
     }
 
-    // Parse translations
-    const getLocalizedContent = (content: string, translations: string | null) => {
-        if (!translations) return content;
-        try {
-            const parsed = JSON.parse(translations);
-            return parsed[locale] || content;
-        } catch (e) {
-            return content;
-        }
-    };
-
-    const title = getLocalizedContent(news.title, news.titleTranslations);
-    const content = getLocalizedContent(news.content, news.contentTranslations);
-
     // Parse photos from JSON
     const photos = news.photos ? JSON.parse(news.photos) : [];
 
@@ -47,7 +31,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
                 {news.imageUrl ? (
                     <Image
                         src={news.imageUrl}
-                        alt={title}
+                        alt={news.title}
                         fill
                         className="object-cover"
                         priority
@@ -79,7 +63,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
                         <div className="flex items-center gap-3 mb-4">
                             <div className="h-8 w-1 bg-accent rounded-full" />
                             <span className="text-gray-400 text-sm">
-                                {new Date(news.date).toLocaleDateString(locale === 'tr' ? 'tr-TR' : locale, {
+                                {new Date(news.date).toLocaleDateString('tr-TR', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric'
@@ -87,14 +71,14 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
                             </span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                            {title}
+                            {news.title}
                         </h1>
                     </div>
 
                     {/* Content */}
                     <div className="prose prose-invert prose-lg max-w-none mb-12">
                         <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">
-                            {content}
+                            {news.content}
                         </p>
                     </div>
 
@@ -110,7 +94,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
                                     >
                                         <Image
                                             src={photo}
-                                            alt={`${title} - Fotoğraf ${index + 1}`}
+                                            alt={`${news.title} - Fotoğraf ${index + 1}`}
                                             fill
                                             className="object-cover group-hover:scale-105 transition-transform duration-300"
                                         />

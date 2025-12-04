@@ -2,17 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useTranslations, useFormatter, useLocale } from 'next-intl';
 
 type Event = {
     id: number;
     title: string;
-    titleTranslations: string | null;
     description: string;
-    descriptionTranslations: string | null;
     date: Date | string;
     location: string | null;
-    locationTranslations: string | null;
     imageUrl: string | null;
     status: string;
     registrationLink: string | null;
@@ -21,19 +17,6 @@ type Event = {
 export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: { activeEvents: Event[], futureEvents: Event[], pastEvents: Event[] }) {
     const [hoveredEvent, setHoveredEvent] = useState<Event | null>(null);
     const [isClosing, setIsClosing] = useState(false);
-    const t = useTranslations('Home');
-    const format = useFormatter();
-    const locale = useLocale();
-
-    const getLocalizedContent = (content: string, translations: string | null) => {
-        if (!translations) return content;
-        try {
-            const parsed = JSON.parse(translations);
-            return parsed[locale] || content;
-        } catch (e) {
-            return content;
-        }
-    };
 
     const handleClose = () => {
         setIsClosing(true);
@@ -59,6 +42,10 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
         return new Date(event.date) < new Date();
     };
 
+    const formatDate = (date: Date | string, options: Intl.DateTimeFormatOptions) => {
+        return new Date(date).toLocaleDateString('tr-TR', options);
+    };
+
     return (
         <div className="space-y-16">
             {/* Full Screen Overlay for Hovered Event */}
@@ -77,7 +64,7 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
                             {hoveredEvent.imageUrl ? (
                                 <Image
                                     src={hoveredEvent.imageUrl}
-                                    alt={getLocalizedContent(hoveredEvent.title, hoveredEvent.titleTranslations)}
+                                    alt={hoveredEvent.title}
                                     fill
                                     className="object-cover"
                                 />
@@ -94,22 +81,22 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
                                 <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-2 ${hoveredEvent.status === 'Active' ? 'bg-accent/20 text-accent' : 'bg-purple-500/20 text-purple-400'}`}>
                                     {hoveredEvent.status}
                                 </span>
-                                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{getLocalizedContent(hoveredEvent.title, hoveredEvent.titleTranslations)}</h2>
+                                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{hoveredEvent.title}</h2>
                                 <div className="flex items-center text-gray-400 text-sm gap-4">
                                     <span className="flex items-center">
                                         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                                        {format.dateTime(new Date(hoveredEvent.date), { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                                        {formatDate(hoveredEvent.date, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                                     </span>
                                     <span className="flex items-center">
                                         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                                        {getLocalizedContent(hoveredEvent.location || '', hoveredEvent.locationTranslations) || 'Belirlenecek'}
+                                        {hoveredEvent.location || 'Belirlenecek'}
                                     </span>
                                 </div>
                             </div>
 
                             <div className="flex-grow overflow-y-auto pr-2 custom-scrollbar min-h-0">
                                 <p className="text-gray-300 leading-relaxed text-sm md:text-base">
-                                    {getLocalizedContent(hoveredEvent.description, hoveredEvent.descriptionTranslations)}
+                                    {hoveredEvent.description}
                                 </p>
                             </div>
 
@@ -121,11 +108,11 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
                                         rel="noopener noreferrer"
                                         className="block w-full bg-accent hover:bg-accent-hover text-white font-bold py-3 px-4 rounded-lg transition-colors text-center"
                                     >
-                                        {t('registerNow')}
+                                        Şimdi Kayıt Ol!
                                     </a>
                                 ) : (
                                     <button disabled className="w-full bg-gray-700 text-gray-400 font-bold py-3 px-4 rounded-lg cursor-not-allowed">
-                                        {t('registrationClosed')}
+                                        Kayıtlar Kapalı!
                                     </button>
                                 )}
                             </div>
@@ -138,7 +125,7 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
             <section>
                 <div className="section-header">
                     <div className="section-indicator bg-accent" />
-                    <h2 className="section-title">{t('activeEvents')}</h2>
+                    <h2 className="section-title">Aktif Etkinlikler</h2>
                 </div>
 
                 {activeEvents.length > 0 ? (
@@ -154,7 +141,7 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
                     </div>
                 ) : (
                     <div className="empty-state">
-                        <p className="text-gray-400">{t('noActiveEvents')}</p>
+                        <p className="text-gray-400">Şu anda aktif etkinlik bulunmamaktadır.</p>
                     </div>
                 )}
             </section>
@@ -163,7 +150,7 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
             <section>
                 <div className="section-header">
                     <div className="section-indicator bg-purple-500" />
-                    <h2 className="section-title">{t('futureEvents')}</h2>
+                    <h2 className="section-title">Gelecek Etkinlikler</h2>
                 </div>
 
                 {futureEvents.length > 0 ? (
@@ -179,7 +166,7 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
                     </div>
                 ) : (
                     <div className="empty-state">
-                        <p className="text-gray-400">{t('noFutureEvents')}</p>
+                        <p className="text-gray-400">Gelecek etkinlikler için takipte kalın!</p>
                     </div>
                 )}
             </section>
@@ -188,7 +175,7 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
             <section>
                 <div className="section-header">
                     <div className="section-indicator bg-gray-500" />
-                    <h2 className="section-title">{t('pastEvents')}</h2>
+                    <h2 className="section-title">Geçmiş Etkinlikler</h2>
                 </div>
 
                 {pastEvents.length > 0 ? (
@@ -204,7 +191,7 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
                     </div>
                 ) : (
                     <div className="empty-state">
-                        <p className="text-gray-400">{t('noPastEvents')}</p>
+                        <p className="text-gray-400">Henüz geçmiş etkinlik bulunmamaktadır.</p>
                     </div>
                 )}
             </section>
@@ -213,17 +200,8 @@ export default function EventsGrid({ activeEvents, futureEvents, pastEvents }: {
 }
 
 function EventCard({ event, type, onHover }: { event: Event, type: 'active' | 'future' | 'past', onHover: () => void }) {
-    const format = useFormatter();
-    const locale = useLocale();
-
-    const getLocalizedContent = (content: string, translations: string | null) => {
-        if (!translations) return content;
-        try {
-            const parsed = JSON.parse(translations);
-            return parsed[locale] || content;
-        } catch (e) {
-            return content;
-        }
+    const formatDate = (date: Date | string, options: Intl.DateTimeFormatOptions) => {
+        return new Date(date).toLocaleDateString('tr-TR', options);
     };
 
     return (
@@ -238,7 +216,7 @@ function EventCard({ event, type, onHover }: { event: Event, type: 'active' | 'f
                 {event.imageUrl ? (
                     <Image
                         src={event.imageUrl}
-                        alt={getLocalizedContent(event.title, event.titleTranslations)}
+                        alt={event.title}
                         fill
                         className="event-image"
                     />
@@ -248,16 +226,16 @@ function EventCard({ event, type, onHover }: { event: Event, type: 'active' | 'f
                     </div>
                 )}
                 <div className="event-date-badge">
-                    {format.dateTime(new Date(event.date), { month: 'short', day: 'numeric' })}
+                    {formatDate(event.date, { month: 'short', day: 'numeric' })}
                 </div>
             </div>
 
             <div className="event-content">
                 <h3 className="event-title">
-                    {getLocalizedContent(event.title, event.titleTranslations)}
+                    {event.title}
                 </h3>
                 <p className="event-description">
-                    {getLocalizedContent(event.description, event.descriptionTranslations)}
+                    {event.description}
                 </p>
 
                 <div className="event-footer">
@@ -265,7 +243,7 @@ function EventCard({ event, type, onHover }: { event: Event, type: 'active' | 'f
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    {getLocalizedContent(event.location || '', event.locationTranslations) || 'Belirlenecek'}
+                    {event.location || 'Belirlenecek'}
                 </div>
             </div>
         </div>
